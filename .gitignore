@@ -1,0 +1,7 @@
+*.elf
+*.bin
+*.map
+*.sav
+*.gba
+
+build
