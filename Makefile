@@ -8,7 +8,7 @@ SRC_DIR   := src
 BUILD_DIR := build
 
 CFLAGS	  := -O2 -Wall -Wextra -flto -I $(INC_DIR) -mcpu=arm7tdmi -mthumb -mthumb-interwork
-CXXFLAGS  := -O2 -Wall -Wextra -flto -I $(INC_DIR) -mcpu=arm7tdmi -mthumb -mthumb-interwork -fno-exceptions -fno-rtti
+CXXFLAGS  := -O2 -Wall -Wextra -flto -I $(INC_DIR) -mcpu=arm7tdmi -mthumb -mthumb-interwork -fno-exceptions -fno-rtti -fpermissive
 LDFLAGS   := -Wl,-Map=$(PROGRAM).map --specs=nano.specs --specs=nosys.specs
 
 UART_DEV  := /dev/ttyUSB0
@@ -43,12 +43,17 @@ CXX_BUILD_DIR := $(BUILD_DIR)/cxx
 CXX_SRCS := $(shell find src/ -type f -name '*.cpp')
 CXX_OBJS := $(patsubst %.cpp,$(CXX_BUILD_DIR)/%.o,$(CXX_SRCS))
 
-OBJS := $(C_OBJS) $(CXX_OBJS)
+ASM_BUILD_DIR := $(BUILD_DIR)/asm
+ASM_SRCS := $(shell find src/ -type f -name '*.s')
+ASM_OBJS := $(patsubst %.s,$(ASM_BUILD_DIR)/%.o,$(ASM_SRCS))
+
+OBJS := $(C_OBJS) $(CXX_OBJS) $(ASM_OBJS)
 
 ###########
 # toolchain
 ###########
 PREF    := arm-none-eabi-
+AS      := $(PREF)as
 CC      := $(PREF)gcc
 CXX     := $(PREF)g++
 LD      := $(CXX)
@@ -78,3 +83,7 @@ $(C_BUILD_DIR)/%.o: %.c
 $(CXX_BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+$(ASM_BUILD_DIR)/%.o: %.s
+	@mkdir -p $(dir $@)
+	$(AS) -o $@ $<
