@@ -1,7 +1,7 @@
 ####################
 # main configuration
 ####################
-PROGRAM   := helloworld
+PROGRAM   := firemania
 
 INC_DIR   := include
 SRC_DIR   := src
@@ -28,7 +28,7 @@ REVISION    := 0
 LIBGBA     := libgba
 LIBGBA_INC := $(LIBGBA)/include
 LIBGBA_FLAGS := -I $(LIBGBA_INC)
-LIBGBA_LDFLAGS := -L $(LIBGBA)/lib -lgba -nostartfiles $(LIBGBA)/gba_crt0.o -Wl,-T,$(LIBGBA)/gba_cart.ld
+LIBGBA_LDFLAGS := -L $(LIBGBA)/lib -lgba -nostartfiles $(LIBGBA)/gba_crt0.o -Wl,-T,$(LIBGBA)/gba_mb.ld
 CFLAGS   := $(CFLAGS) $(LIBGBA_FLAGS)
 CXXFLAGS := $(CXXFLAGS) $(LIBGBA_FLAGS)
 
