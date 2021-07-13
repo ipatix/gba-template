@@ -118,6 +118,7 @@ static void State_Init() {
 
     // init framebuffer
     DmaSet32((u16 *)0x06000000, 0, 240 * 159);
+    DmaSet32((u16 *)0x0600A000, 0, 240 * 159);
     DmaSet32((u16 *)(0x06000000 + 240 * 159), exp32(36), 240);
     DmaSet32((u16 *)(0x0600A000 + 240 * 159), exp32(36), 240);
 
